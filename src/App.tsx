@@ -20,34 +20,36 @@ export const App: React.FC = () => {
   const [isSorted, setIsSorted] = useState(false);
   const [activeButton, setActiveButton] = useState('');
 
-  const IS_LIGHT_ACTIVE_SORT_ALPHABETICAL: string = 'alphabetical';
-  const IS_LIGHT_ACTIVE_SORT_LENGTH: string = 'length';
-  const IS_LIGHT_ACTIVE_SORT_REVERSE: string = 'reverse';
+  enum SortType {
+    alphabetical = 'alphabetical',
+    length = 'length',
+    reverse = 'reverse',
+  }
 
-  const sortGoodstAlphabetically = () => {
+  const sortAlphabetically = () => {
     const alphabetical = [...prepareGoods.sort()];
 
     setPrepareGoods(alphabetical);
     setIsSorted(true);
-    setActiveButton('alphabetical');
+    setActiveButton(SortType.alphabetical);
   };
 
-  const sortGoodstLength = () => {
+  const sortByLength = () => {
     const length = prepareGoods.sort(
       (goods1, goods2) => goods1.length - goods2.length,
     );
 
     setPrepareGoods([...length]);
     setIsSorted(true);
-    setActiveButton('length');
+    setActiveButton(SortType.length);
   };
 
-  const reverseGoods = () => {
+  const reverseOrder = () => {
     const reverse = prepareGoods.sort().reverse();
 
     setPrepareGoods([...reverse]);
     setIsSorted(true);
-    setActiveButton('reverse');
+    setActiveButton(SortType.reverse);
   };
 
   const reset = () => {
@@ -61,22 +63,22 @@ export const App: React.FC = () => {
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${activeButton === IS_LIGHT_ACTIVE_SORT_ALPHABETICAL ? '' : 'is-light'}`}
-          onClick={sortGoodstAlphabetically}
+          className={`button is-info ${activeButton === SortType.alphabetical ? '' : 'is-light'}`}
+          onClick={sortAlphabetically}
         >
           Sort alphabetically
         </button>
         <button
           type="button"
-          className={`button is-info ${activeButton === IS_LIGHT_ACTIVE_SORT_LENGTH ? '' : 'is-light'}`}
-          onClick={sortGoodstLength}
+          className={`button is-info ${activeButton === SortType.length ? '' : 'is-light'}`}
+          onClick={sortByLength}
         >
           Sort by length
         </button>
         <button
           type="button"
-          className={`button is-info ${activeButton === IS_LIGHT_ACTIVE_SORT_REVERSE ? '' : 'is-light'}`}
-          onClick={reverseGoods}
+          className={`button is-info ${activeButton === SortType.reverse ? '' : 'is-light'}`}
+          onClick={reverseOrder}
         >
           Reverse
         </button>
